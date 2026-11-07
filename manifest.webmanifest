@@ -1,0 +1,17 @@
+{
+  "id": "./index.html",
+  "name": "Hidden Places – Entdecke das Unsichtbare",
+  "short_name": "Hidden Places",
+  "description": "Erkunde besondere Orte in deiner Blickrichtung mit Kompass und Live-Daten aus OpenStreetMap.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b1313",
+  "theme_color": "#0b1313",
+  "lang": "de",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
