@@ -1,48 +1,119 @@
-# Hidden Places – PWA
+# Hidden Places v5 – Invisible Waves
 
-Eine mobile, installierbare HTML-PWA zum Erkunden besonderer Orte anhand der Blickrichtung.
+Modulare, frameworkfreie Progressive Web App auf Basis von Hidden Places v4.
+Die bisherigen Modi **Entdecken** und **Radar** bleiben erhalten. Neu im Modus-Dropdown:
+**Wellen / Invisible Waves**.
 
-## Funktionen
+## Funktionen in v5
 
-- **Live-Standort** (Browser-Geolocation) oder manuelle Latitude/Longitude-Eingabe
-- **OpenStreetMap-POIs** über Overpass-API (Geschichte, Natur, Aussicht, Kultur)
-- **Sensorbasierter Kompass**, mit optionaler Freigabe auf iOS, oder manueller 360°-Regler
-- **Kamera-Overlay** (optional, per Button aktivieren) und animierte Vorschau ohne Kamera
-- **AR-artige Markierungen**, Radar und Detailkarten mit Routenlink
-- **Radius- und Kategorienfilter**, Suche innerhalb der Orte, lokale Merkliste
-- **Berlin-Demo**, die auch offline funktioniert
-- **Installierbare PWA** mit Manifest, App-Icons und Service Worker
+- **Signalraum:** Animierte, farbcodierte Signalwolken im Vollbild-Viewer.
+  Sie bewegen sich relativ zur eingestellten Blickrichtung: Smartphone drehen,
+  Sensor aktivieren oder den Richtungsslider im Modus-Dropdown nutzen.
+- **Browser-Verbindung:** `navigator.onLine` und, falls verfügbar, `navigator.connection`
+  (`type`, `effectiveType`, `downlink`, `rtt`). Das sind Hinweise zur bestehenden
+  Internetverbindung und **keine** Messwerte benachbarter Funkquellen.
+- **Bluetooth (BLE):** Über **Bluetooth wählen** kann ein unterstützter Browser
+  ein Gerät in seinem Dialog auswählen lassen (`navigator.bluetooth.requestDevice`).
+  Namen zuvor freigegebener Geräte können optional über `getDevices()` wieder
+  geladen werden. Kein automatisches Pairing, keine kontinuierliche Gerätesuche.
+- **Demo-Wellen:** Vier **ausdrücklich als Demo markierte** Beispielquellen (WLAN,
+  BLE, Mobilfunk, IoT). Über den Schalter jederzeit deaktivierbar.
+- **Fokus:** Auf eine Wolke tippen oder per "Durchschalten" eine andere Projektion
+  wählen. Die visualisierten "Richtungen" sind bewusst fiktiv.
+- **Kamera, Kompass und Offline-Shell:** Die bisherigen Funktionen bleiben erhalten;
+  auch die Wellenansicht funktioniert ohne externe Bibliotheken oder API-Schlüssel.
 
-## Starten (lokal)
+## Wichtige Grenzen des Webs
 
-Im Ordner dieses Projekts:
+Diese HTML-PWA **kann keine WLAN-Netze in der Nähe auflisten**, ihre RSSI-Werte
+messen oder ihren physikalischen Standort bestimmen. Web Bluetooth ist nur in
+bestimmten Browsern und sicheren Kontexten verfügbar und benötigt eine explizite
+Gerätefreigabe. BLE-Gerätename und Browser-Verbindungsinfos erlauben **keine**
+zuverlässige Positions- oder Entfernungsbestimmung. `effectiveType: "4g"` ist
+**eine Verbindungsleistungsklasse**, keine Bestätigung, dass Mobilfunk verwendet wird.
+
+Die Wellen, Intensitäten, Winkel, Abstände und Bewegungen auf dem Canvas sind
+**künstlerische Projektionen** und kein gemessenes Hochfrequenzfeld. Browserdaten
+werden in dieser App lokal verarbeitet und nicht für den Wellenmodus an einen
+Server gesendet. Eine tatsächlich funktechnische Umsetzung mit passivem WLAN-
+oder BLE-Scanning würde native Plattform-APIs und gesonderte Berechtigungen
+benötigen. Der Demo-Modus funktioniert auch ohne Sensor/Bluetooth.
+
+Dokumentation zu unterstützten Webfunktionen:
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API
+- https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice
+- https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
+
+## Projektstruktur
+
+```text
+hidden-places-v5/
+├── index.html
+├── manifest.webmanifest
+├── sw.js                       # Offline-Cache v5
+├── css/
+│   ├── main.css
+│   ├── components.css
+│   ├── responsive.css
+│   └── waves.css               # Signalraum, mobil und Desktop
+├── js/
+│   ├── app.js                  # App-Komposition + Store-Subscriptions
+│   ├── state.js                # zentraler Zustand
+│   ├── config.js               # Berlin-Demo und Overpass-Konfiguration
+│   ├── services/
+│   │   ├── geolocation.js
+│   │   ├── sensors.js
+│   │   ├── camera.js
+│   │   ├── places-api.js
+│   │   └── signals.js          # Network Information / erlaubte BLE-Geräte
+│   ├── components/
+│   │   ├── toolbar.js
+│   │   ├── sidebar.js
+│   │   ├── viewer.js
+│   │   ├── radar.js
+│   │   ├── waves.js            # Canvas, Beacon-Marker, Scanner-Panel
+│   │   ├── dropdown.js
+│   │   └── notifications.js
+│   └── utils/
+│       ├── geo-math.js
+│       ├── dom.js
+│       └── storage.js
+├── icons/
+└── tests/
+    ├── logic.test.mjs
+    └── smoke.py
+```
+
+## Start / Installation
 
 ```bash
+cd hidden-places-v5
 python3 -m http.server 8000
 ```
 
-Dann `http://localhost:8000` im Browser öffnen. Für GPS, Kamera, Sensoren und die Installation auf dem **Smartphone** die Dateien auf einer **HTTPS-Domain** bereitstellen, zum Beispiel GitHub Pages oder Cloudflare Pages. Einfaches Öffnen per `file://` reicht für die PWA-Installation nicht.
+Im Desktop-Browser `http://localhost:8000` öffnen. Für ein Smartphone die Dateien
+auf einem HTTPS-Host (z.B. GitHub Pages oder Cloudflare Pages) bereitstellen und
+"App installieren" im Modus-Dropdown wählen. `file://` unterstützt ES-Module nicht
+zuverlässig. Sensoren, Kamera, Bluetooth, GPS und Service Worker benötigen einen
+sicheren Kontext; Bluetooth zusätzlich einen kompatiblen Browser.
 
-## Bedienung
+## Tests
 
-1. Die App beginnt im **Berlin-Demo-Modus** mit Beispieldaten.
-2. **Mein Standort** lädt echte benannte Orte aus OSM im Umkreis von bis zu 15 km. Als Alternative können mit **Koordinaten** andere Regionen erkundet werden.
-3. **Kompass aktivieren** schaltet die Bewegungssensoren ein. Alternativ bewegt der Richtungsregler die Sicht oder du ziehst horizontal über die Ansicht.
-4. **Kamera** ersetzt die abstrakte Landschaft durch ein Live-Kamerabild. Die POI-Marker bleiben positionsbasiert und sind **keine präzisen AR-Anker**.
-5. Auf Orte klicken, **merken**, Route oder Karte öffnen.
+```bash
+node --test tests/logic.test.mjs
+python3 tests/smoke.py
+```
 
-## Daten / Datenschutz
+Die Browsertests prüfen Mobile/Desktop, 3 Modi, Offcanvas, Standort-Demo,
+OpenStreetMap-Parsing mit Mock-Antworten, Sensor und Kamera mit Simulationen,
+Demo-Toggle und Bluetooth-Browserauswahl mit Stub. Kein echter Funkscan wird getestet.
+Die Installation, native Geräteberechtigungen und Browser-/OS-spezifische Sensorik
+müssen auf dem Zielgerät geprüft werden.
 
-- Live-Orte kommen von den OpenStreetMap-Mitwirkenden und werden über Overpass abgefragt. Datenlizenz: Open Database License (ODbL), siehe <https://www.openstreetmap.org/copyright>.
-- Eine Standortabfrage übermittelt die ausgewählten Koordinaten an den Overpass-API-Dienst. Die App verwendet zwischengespeicherte Live-Ergebnisse maximal **15 Minuten erneut** (der Session Storage kann die Daten bis zum Ende der Browser-Session enthalten) und kein permanentes GPS-Profil.
-- Die Merkliste wird auf dem Gerät im Local Storage gespeichert. Es gibt keinen eigenen Backend-Server.
-- Primärer API-Endpunkt: `https://overpass.private.coffee/api/interpreter` (für faire, gelegentliche Tests). Sekundärer Endpunkt: `https://overpass-api.de/api/interpreter`. Für stark genutzte öffentliche Apps einen eigenen oder vertraglich gehosteten POI-Dienst verwenden.
-- Bei Offline-Betrieb funktionieren die App-Oberfläche und die **Berlin-Demo**. Live-Abfragen benötigen Internet.
-- Browser-Kompasswerte können je nach Gerät und Kalibrierung ungenau sein. Relative Sensorwerte werden ausdrücklich als „RELATIVE AUSRICHTUNG“ angezeigt und dürfen nicht mit einem echten Nordkurs verwechselt werden.
+## Daten/Datenschutz
 
-## Dateien
-
-- `index.html` – komplette HTML-/CSS-/JavaScript-App ohne Framework
-- `manifest.webmanifest` – PWA-Konfiguration
-- `sw.js` – Offline-Service-Worker
-- `icons/` – installierbare App-Icons
+Die ursprüngliche OpenStreetMap-Ortssuche über Overpass bleibt separat erhalten.
+Dabei werden nur bei einer Live-Ortsabfrage die Standortkoordinaten an den
+Overpass-Dienst gesendet. Die Wellenfunktion verwendet keine Drittanbieter-API.
+Die App unterstützt `prefers-reduced-motion` und pausiert die Animation in
+Hintergrund-Tabs. OSM-Daten: © OpenStreetMap-Mitwirkende, ODbL.

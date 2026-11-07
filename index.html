@@ -4,233 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b1313" />
-  <meta name="description" content="Hidden Places: Entdecke spannende Orte, verborgene Geschichte und besondere Landschaften in deiner Blickrichtung." />
+  <meta name="description" content="Hidden Places: Entdecke besondere Orte und visualisiere die unsichtbare digitale Welt im neuen Invisible-Waves-Modus." />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Hidden Places" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-  <title>Hidden Places — Entdecke das Unsichtbare</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0b1313; --panel: #111b1b; --panel2: #172322; --line: #2a3935;
-      --paper: #eff4eb; --muted: #a0ada5; --quiet: #71837b; --accent: #d5fa8c;
-      --accent-ink: #1a2a13; --radius: 24px; --shadow: 0 26px 60px rgba(0,0,0,.28);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      font-synthesis: none;
-    }
-    * { box-sizing: border-box; }
-    html { background: var(--bg); }
-    body { min-width: 320px; margin: 0; min-height: 100dvh; background: var(--bg); color: var(--paper); }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { cursor: not-allowed; opacity:.56; }
-    button:focus-visible, input:focus-visible, a:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    a { color: inherit; }
-    .app-shell { max-width: 1550px; margin: 0 auto; padding: 22px 28px 26px; }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:64px; padding:0 3px 20px; }
-    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
-    .brand-icon { width:45px; height:45px; background:var(--accent); color:var(--accent-ink); border-radius:14px; display:grid; place-items:center; flex:none; }
-    .brand-name { font-weight:840; letter-spacing:-.065em; font-size:26px; line-height:1; }
-    .brand-name span { color:var(--accent); }
-    .brand-desc { color:var(--quiet); font-size:10px; font-weight:750; letter-spacing:.18em; margin-top:5px; }
-    .header-right { display:flex; align-items:center; gap:9px; }
-    .header-pill { color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:9px 13px; font-size:11px; font-weight:750; letter-spacing:.08em; display:flex; gap:8px; align-items:center; white-space:nowrap; }
-    .live-light { width:7px; height:7px; background:#9be17b; border-radius:50%; box-shadow:0 0 13px #9be17b; }
-    .header-btn { background:#1a2827; border:1px solid #32413b; color:var(--paper); border-radius:12px; min-height:39px; padding:9px 14px; font-size:12px; font-weight:800; display:flex; gap:8px; align-items:center; }
-    .header-btn:hover, .chip:hover, .mini-btn:hover { border-color:#829d73; }
-    .header-btn.primary { color:var(--accent-ink); background:var(--accent); border-color:var(--accent); }
-    .glyph { width:17px; height:17px; display:inline-block; flex:none; vertical-align:middle; }
-    .glyph.sm { width:14px; height:14px; }
-    .workspace { display:grid; grid-template-columns:minmax(320px, 406px) minmax(0, 1fr); gap:22px; min-height:0; height:calc(100dvh - 119px); max-height:1020px; }
-    .sidebar { display:flex; flex-direction:column; min-height:0; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#43564b transparent; padding:12px 8px 8px 2px; }
-    .eyebrow { display:flex; gap:10px; align-items:center; font-size:11px; font-weight:850; letter-spacing:.22em; color:var(--accent); text-transform:uppercase; }
-    .eyebrow:before { content:""; width:21px; height:1px; background:var(--accent); }
-    h1 { margin:17px 0 12px; font-size:clamp(36px,3.1vw,54px); line-height:1.08; letter-spacing:-.075em; font-weight:825; }
-    h1 em { font-style:normal; color:var(--accent); }
-    .lede { margin:0 0 24px; color:var(--muted); font-size:14px; line-height:1.62; max-width:355px; }
-    .location-card { border:1px solid #304038; background:linear-gradient(130deg,#1c2c25,#131f1e); border-radius:20px; padding:17px; margin-bottom:23px; }
-    .location-head { display:flex; align-items:start; justify-content:space-between; gap:10px; }
-    .loc-icon { width:38px; height:38px; display:grid; place-items:center; background:#324934; color:var(--accent); border-radius:12px; flex:none; }
-    .location-heading { display:flex; align-items:center; gap:11px; min-width:0; }
-    .section-overline { font-size:10px; letter-spacing:.14em; color:#98ae9c; font-weight:800; text-transform:uppercase; }
-    .location-name { font-size:17px; font-weight:800; margin-top:3px; letter-spacing:-.035em; overflow-wrap:anywhere; }
-    .location-coords { font-size:11px; color:var(--quiet); margin:8px 0 16px 49px; }
-    .loc-actions { display:grid; grid-template-columns:1fr auto; gap:8px; }
-    .action-btn { border:0; background:var(--accent); color:var(--accent-ink); font-size:12px; font-weight:850; padding:12px 13px; border-radius:11px; display:flex; align-items:center; justify-content:center; gap:9px; }
-    .action-btn:hover { background:#e6ffaf; }
-    .mini-btn { background:transparent; color:var(--paper); border:1px solid #45574d; padding:11px 13px; border-radius:11px; font-size:12px; font-weight:750; }
-    .field-label { font-size:11px; text-transform:uppercase; color:#afbbad; font-weight:850; letter-spacing:.13em; margin-bottom:12px; }
-    .filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:19px; }
-    .chip { border:1px solid #344540; background:#14201e; color:#b6c0b6; padding:10px 12px; border-radius:100px; font-size:12px; font-weight:750; transition:background .15s, color .15s; }
-    .chip.active { color:var(--accent-ink); background:var(--accent); border-color:var(--accent); }
-    .filter-range { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-bottom:9px; }
-    .filter-range strong { font-size:12px; color:var(--accent); }
-    .range { width:100%; height:5px; accent-color:var(--accent); margin:4px 0 18px; cursor:pointer; }
-    .search-box { border:1px solid #34453e; border-radius:13px; display:flex; align-items:center; gap:10px; color:var(--quiet); padding:0 12px; background:#15201e; margin-bottom:23px; }
-    .search-box input { min-height:42px; color:var(--paper); background:none; border:0; outline:0; width:100%; min-width:0; font-size:13px; }
-    .search-box input::placeholder { color:#77887c; }
-    .places-head { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:10px; }
-    .places-head h2 { font-size:20px; letter-spacing:-.045em; margin:0; }
-    .places-head small { color:var(--quiet); font-weight:700; font-size:11px; }
-    .places-list { display:flex; flex-direction:column; gap:9px; padding:0 2px 12px 0; }
-    .place-item { display:flex; align-items:stretch; border:1px solid #293832; background:#121e1c; border-radius:16px; transition:border .18s, background .18s; overflow:hidden; }
-    .place-item:hover { border-color:#6b8966; }
-    .place-item.selected { border-color:#b2df83; background:#1b2a22; }
-    .place-main { border:none; background:none; color:inherit; display:flex; align-items:center; gap:12px; text-align:left; padding:13px 6px 13px 12px; width:100%; min-width:0; }
-    .place-icon { width:43px; height:43px; display:grid; place-items:center; border-radius:12px; background:#294034; color:#cfefa9; flex:none; }
-    .place-icon.history { background:#40372b; color:#f1d1a4; }
-    .place-icon.nature { background:#244438; color:#9adeae; }
-    .place-icon.view { background:#283d4e; color:#a7d6ff; }
-    .place-icon.culture { background:#413348; color:#e1bdf9; }
-    .place-data { min-width:0; flex:1; }
-    .place-title { color:#ebf4e9; font-weight:790; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .place-sub { font-size:11px; color:var(--muted); margin-top:6px; display:flex; gap:7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .place-sub span:first-child { color:var(--accent); font-weight:800; }
-    .bookmark { align-self:center; flex:none; border:0; background:transparent; color:#758579; font-size:20px; padding:14px 12px; }
-    .bookmark.saved { color:var(--accent); }
-    .empty-state { background:#14211d; border:1px dashed #415449; border-radius:14px; padding:22px; color:var(--muted); font-size:13px; line-height:1.55; }
-    .small-print { color:#788b80; font-size:10px; line-height:1.7; margin:9px 0; }
-    .small-print a { text-underline-offset:3px; }
-    .viewer-col { display:flex; flex-direction:column; min-width:0; min-height:0; gap:13px; }
-    .viewport { position:relative; isolation:isolate; flex:1; min-height:450px; overflow:hidden; border-radius:27px; border:1px solid #4a5d49; background:#152526; touch-action:pan-y; user-select:none; box-shadow:var(--shadow); }
-    .scene, .scene-gradient, #cameraVideo, .terrain, .scene-grid { position:absolute; inset:0; width:100%; height:100%; }
-    .scene-gradient { background:radial-gradient(ellipse at 58% 46%,rgba(92,139,117,.35),transparent 43%), linear-gradient(180deg,#203844 0%,#3d4e4e 45%,#67766b 70%,#293f36 100%); }
-    .viewport.camera-active .scene-gradient { opacity:0; }
-    #cameraVideo { object-fit:cover; opacity:0; transition:opacity .25s ease; }
-    .viewport.camera-active #cameraVideo { opacity:1; }
-    .terrain { bottom:-2px; top:auto; height:47%; opacity:1; pointer-events:none; }
-    .viewport.camera-active .terrain, .viewport.camera-active .starfield { opacity:0; }
-    .starfield { position:absolute; inset:0; pointer-events:none; opacity:.8; background-image:radial-gradient(#d5f2d4 1px,transparent 1px),radial-gradient(#d5f2d4 1px,transparent 1px); background-size:129px 119px,173px 159px; background-position:36px 51px,110px 92px; mask-image:linear-gradient(180deg,black,transparent 70%); }
-    .scene-grid { opacity:.3; pointer-events:none; background-image:linear-gradient(90deg,transparent calc(50% - .5px),#c6edb4 50%,transparent calc(50% + .5px)),linear-gradient(0deg,transparent calc(48% - .5px),#d8ffc5 48%,transparent calc(48% + .5px)); background-size:23% 100%,100% 20%; mask-image:linear-gradient(180deg,transparent 4%,black 31%,black 77%,transparent); }
-    .viewport:after { content:""; position:absolute; inset:0; z-index:5; pointer-events:none; border-radius:inherit; background:linear-gradient(180deg,rgba(3,13,16,.52),transparent 24%,transparent 62%,rgba(3,13,11,.77)); }
-    .scan-sweep { position:absolute; z-index:1; inset:0; pointer-events:none; opacity:.22; background:linear-gradient(180deg,transparent 0%,rgba(229,255,186,.17) 49%,transparent 52%); background-size:100% 430px; animation:sweep 9s linear infinite; }
-    @keyframes sweep { from { transform:translateY(-70%); } to { transform:translateY(115%); } }
-    @media (prefers-reduced-motion:reduce) { .scan-sweep { animation:none; } .pulse { animation:none!important; } }
-    .view-top { position:absolute; z-index:9; top:0; left:0; right:0; padding:23px 24px; display:flex; align-items:start; justify-content:space-between; gap:10px; }
-    .view-tag { border:1px solid rgba(233,255,214,.38); background:rgba(9,24,20,.46); backdrop-filter:blur(12px); border-radius:7px; font-size:10px; line-height:1; font-weight:850; color:#ebffdf; letter-spacing:.13em; padding:10px 11px; display:flex; align-items:center; gap:8px; }
-    .view-tag .pulse { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:glow 1.8s infinite; }
-    @keyframes glow { 50% { opacity:.45; } }
-    .bearing { color:#f4ffe9; text-align:right; text-shadow:0 2px 16px #10201a; }
-    .bearing strong { font-size:27px; line-height:1; font-weight:800; letter-spacing:-.07em; font-variant-numeric:tabular-nums; }
-    .bearing span { font-size:11px; font-weight:780; color:var(--accent); margin-left:6px; }
-    .bearing small { display:block; font-size:9px; font-weight:790; color:#bfdbbd; letter-spacing:.17em; margin-top:6px; }
-    .bearing-ruler { position:absolute; top:96px; left:14%; right:14%; height:27px; z-index:7; border-top:1px solid rgba(225,252,218,.28); overflow:hidden; pointer-events:none; }
-    .bearing-tick { position:absolute; top:0; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:4px; color:#e0f3de; text-shadow:0 2px 9px #12251f; font-size:10px; font-weight:850; }
-    .bearing-tick:before { content:""; width:1px; height:6px; background:#c4e8af; }
-    .crosshair { position:absolute; z-index:4; left:50%; top:47%; width:64px; height:64px; transform:translate(-50%,-50%); pointer-events:none; opacity:.65; }
-    .crosshair:before, .crosshair:after { content:""; position:absolute; background:rgba(216,254,180,.85); }
-    .crosshair:before { width:1px; height:64px; left:50%; }
-    .crosshair:after { height:1px; width:64px; top:50%; }
-    .crosshair-inner { position:absolute; width:16px; height:16px; border:1px solid var(--accent); border-radius:50%; top:24px; left:24px; box-shadow:0 0 16px rgba(196,250,136,.35); background:#ffffff10; }
-    .horizon-label { position:absolute; z-index:5; left:50%; top:calc(47% + 45px); transform:translateX(-50%); white-space:nowrap; color:#e1f3dd; letter-spacing:.2em; font-weight:850; font-size:9px; opacity:.66; text-shadow:0 3px 10px #10201a; pointer-events:none; }
-    .ar-markers { position:absolute; inset:0; z-index:6; pointer-events:none; }
-    .ar-marker { position:absolute; z-index:1; border:1px solid rgba(219,255,189,.55); background:rgba(8,23,19,.78); backdrop-filter:blur(11px); color:#fff; padding:9px 11px; max-width:178px; min-width:112px; text-align:left; border-radius:11px; transform:translate(-50%,-50%); box-shadow:0 13px 35px #03120e66; pointer-events:auto; transition:left .13s linear,top .13s linear, border .2s; }
-    .ar-marker:hover, .ar-marker.selected { border-color:var(--accent); background:rgba(30,58,42,.92); }
-    .ar-marker:after { content:""; position:absolute; top:100%; left:50%; width:1px; height:18px; background:linear-gradient(#d9ffaeaa,transparent); }
-    .ar-marker:before { content:""; position:absolute; width:5px; height:5px; background:var(--accent); border-radius:50%; left:calc(50% - 2px); top:calc(100% + 17px); box-shadow:0 0 12px var(--accent); }
-    .marker-top { display:flex; align-items:center; gap:6px; color:var(--accent); font-size:10px; letter-spacing:.05em; font-weight:900; }
-    .marker-name { font-size:12px; margin-top:5px; font-weight:810; line-height:1.2; overflow-wrap:anywhere; }
-    .marker-dot { display:inline-block; width:5px; height:5px; background:currentColor; border-radius:50%; }
-    .viewport-bottom { position:absolute; z-index:8; bottom:16px; left:19px; right:19px; display:flex; align-items:flex-end; justify-content:space-between; gap:14px; }
-    .radar-card { border:1px solid #9ab28f6b; background:#0b201aca; border-radius:16px; padding:9px 10px 5px; backdrop-filter:blur(12px); box-shadow:0 10px 36px #08181166; width:151px; flex:none; }
-    .radar-head { color:#d6f5c6; font-size:9px; font-weight:870; letter-spacing:.17em; display:flex; justify-content:space-between; padding:0 4px; }
-    #radarCanvas { width:128px; height:128px; display:block; cursor:pointer; touch-action:manipulation; }
-    .view-footnote { text-align:right; margin-bottom:5px; }
-    .view-footnote strong { color:#e5ffd9; font-size:10px; letter-spacing:.1em; display:block; }
-    .view-footnote span { color:#bed0bd; font-size:10px; line-height:1.5; }
-    .detail-card { position:absolute; z-index:11; left:20px; right:20px; bottom:176px; max-width:480px; margin-left:auto; background:#12201def; backdrop-filter:blur(25px); border:1px solid #afce9a80; box-shadow:0 23px 55px #06100c91; border-radius:17px; padding:15px 16px 14px; display:none; }
-    .detail-card.open { display:block; }
-    .detail-close { position:absolute; right:12px; top:10px; width:29px; height:29px; color:#cedac9; background:#35433b; border:0; border-radius:50%; display:grid; place-items:center; }
-    .detail-category { color:var(--accent); font-size:10px; font-weight:850; letter-spacing:.17em; text-transform:uppercase; margin-bottom:8px; padding-right:34px; }
-    .detail-card h3 { font-size:20px; line-height:1.18; margin:0 30px 7px 0; letter-spacing:-.04em; }
-    .detail-card p { margin:0 0 13px; font-size:12px; color:#b6c7b7; line-height:1.55; max-height:53px; overflow:auto; }
-    .detail-meta { display:flex; gap:14px; color:#dbe9d9; font-size:11px; font-weight:770; margin-bottom:13px; }
-    .detail-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; }
-    .detail-actions a { text-decoration:none; background:var(--accent); color:#1a2b17; display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; font-weight:850; padding:11px 12px; border-radius:10px; flex:1; }
-    .detail-actions button { border:1px solid #53634d; color:#e6f2df; background:#2d3d33; padding:10px 12px; border-radius:10px; font-weight:800; font-size:11px; }
-    .viewer-dock { display:flex; align-items:center; gap:14px; border:1px solid #2b3a35; background:#15211f; border-radius:19px; padding:12px 16px; flex-wrap:wrap; }
-    .dock-switch { display:flex; gap:5px; background:#0a1412; border-radius:11px; padding:4px; flex:none; }
-    .dock-tab { border:0; background:transparent; color:#94a79a; border-radius:8px; padding:9px 13px; font-weight:850; font-size:12px; }
-    .dock-tab.active { color:#1b2b14; background:var(--accent); }
-    .dock-heading { flex:1; min-width:130px; display:flex; flex-direction:column; gap:6px; }
-    .dock-heading .labels { display:flex; justify-content:space-between; gap:8px; font-size:10px; color:#98ab9d; font-weight:750; }
-    .dock-heading .labels strong { color:var(--accent); font-variant-numeric:tabular-nums; }
-    .dock-heading input { width:100%; accent-color:var(--accent); cursor:pointer; }
-    .sensor-btn { color:var(--paper); border:1px solid #52654f; border-radius:11px; background:#294033; padding:11px 13px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; font-weight:840; flex:none; }
-    .sensor-btn.on { background:#324b30; color:var(--accent); border-color:#91bb69; }
-    .viewport.radar-mode .ar-markers, .viewport.radar-mode .crosshair, .viewport.radar-mode .horizon-label { display:none; }
-    .radar-stage { display:none; position:absolute; inset:0; z-index:6; align-items:center; justify-content:center; padding:85px 12px 135px; pointer-events:none; }
-    .viewport.radar-mode .radar-stage { display:flex; }
-    #radarBig { width:auto; height:100%; max-width:100%; max-height:480px; aspect-ratio:1; pointer-events:auto; cursor:pointer; }
-    .viewport.radar-mode .radar-card { display:none; }
-    .viewport.radar-mode .scene-gradient { opacity:.45; }
-    .viewport.radar-mode .terrain { opacity:.2; }
-    .mobile-intro { display:none; }
-    .toast { position:fixed; z-index:40; bottom:24px; left:50%; transform:translate(-50%,20px); width:max-content; max-width:min(90vw,550px); background:#d5fa8c; color:#162415; border-radius:12px; font-size:13px; line-height:1.4; font-weight:770; padding:13px 18px; opacity:0; pointer-events:none; box-shadow:0 15px 40px #0008; transition:transform .2s, opacity .2s; }
-    .toast.show { opacity:1; transform:translate(-50%,0); }
-    dialog { color:var(--paper); background:#14211e; border:1px solid #556a56; border-radius:20px; width:min(92vw,420px); padding:26px; box-shadow:0 35px 130px #000b; }
-    dialog::backdrop { background:#050d0bc4; backdrop-filter:blur(5px); }
-    dialog h2 { margin:0 0 8px; font-size:24px; letter-spacing:-.05em; }
-    dialog p { color:var(--muted); font-size:13px; line-height:1.6; margin:0 0 20px; }
-    .dialog-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    .dialog-fields label { display:flex; flex-direction:column; gap:7px; font-size:11px; color:#bfcdbd; font-weight:800; }
-    .dialog-fields input { width:100%; min-width:0; padding:13px 10px; background:#0b1615; border:1px solid #45614e; border-radius:10px; color:var(--paper); }
-    .dialog-actions { display:flex; gap:9px; margin-top:21px; }
-    .dialog-actions .action-btn { flex:1; }
-    .dialog-actions .mini-btn { flex:1; }
-    .kbd-help { color:#91a397; font-size:10px; line-height:1.7; margin:8px 0 0; }
-    @media (max-width:1050px) {
-      .app-shell { padding:14px 16px 20px; }
-      .workspace { grid-template-columns:minmax(290px,365px) minmax(0,1fr); gap:14px; height:calc(100dvh - 99px); }
-      .view-top { padding:17px; }
-      .viewport-bottom { left:12px; right:12px; }
-      .radar-card { width:136px; padding:7px; }
-      #radarCanvas { width:120px; height:120px; }
-      .header-pill { display:none; }
-      .viewer-dock { gap:10px; }
-      .dock-tab { padding:8px; }
-    }
-    @media (max-width:760px) {
-      .app-shell { padding:12px 12px 24px; }
-      .topbar { padding:0 0 12px; }
-      .brand-icon { width:40px; height:40px; border-radius:12px; }
-      .brand-name { font-size:23px; }
-      .brand-desc { font-size:9px; }
-      .header-btn { padding:9px 11px; }
-      .header-btn .btn-label { display:none; }
-      .workspace { display:flex; flex-direction:column; gap:16px; height:auto; max-height:none; }
-      .mobile-intro { display:block; margin:6px 5px 12px; }
-      .mobile-intro strong { display:block; font-size:22px; line-height:1.16; letter-spacing:-.055em; }
-      .mobile-intro strong span { color:var(--accent); }
-      .mobile-intro small { display:block; color:var(--muted); font-size:12px; margin-top:6px; line-height:1.4; }
-      .sidebar { order:2; overflow:visible; padding:0 2px; }
-      .sidebar .intro { display:none; }
-      .viewer-col { order:1; }
-      .viewport { min-height:490px; height:59dvh; flex:none; border-radius:22px; }
-      .viewer-dock { border-radius:14px; padding:10px; }
-      .dock-heading { order:3; flex-basis:100%; }
-      .sensor-btn { margin-left:auto; }
-      .location-card { margin-top:3px; margin-bottom:22px; }
-      .view-footnote { max-width:145px; }
-      .detail-card { bottom:157px; left:12px; right:12px; }
-      .ar-marker { min-width:99px; padding:8px; max-width:135px; }
-      .marker-name { font-size:11px; }
-    }
-    @media (max-width:400px) {
-      .viewport { height:56dvh; min-height:455px; }
-      .view-top { padding:14px; }
-      .bearing strong { font-size:22px; }
-      .viewport-bottom { bottom:10px; }
-      .radar-card { transform:scale(.88); transform-origin:bottom left; margin-right:-18px; }
-      .view-footnote span { font-size:9px; }
-      .detail-card { bottom:148px; }
-      .header-right { gap:6px; }
-      .header-btn { padding:8px; }
-    }
-  </style>
+  <title>Hidden Places v5 — Invisible Waves</title>
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/responsive.css" />
+  <link rel="stylesheet" href="./css/waves.css" />
 </head>
 <body>
   <div class="app-shell">
@@ -241,19 +26,37 @@
         </div>
         <div><div class="brand-name">hidden<span>.</span>places</div><div class="brand-desc">DISCOVER WHAT'S AROUND</div></div>
       </div>
-      <div class="header-right">
-        <span class="header-pill"><span class="live-light"></span> ENTDECKER-MODUS</span>
-        <button id="cameraBtn" class="header-btn" type="button" aria-pressed="false" title="Kamera ein-/ausschalten"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 5 16 7h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4l2-2h4Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="btn-label">Kamera</span></button>
-        <button id="installBtn" class="header-btn primary" type="button" title="App installieren"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v13m-5-5 5 5 5-5M4 16v4h16v-4"/></svg><span class="btn-label">Installieren</span></button>
-      </div>
-    </header>
-
-    <div class="mobile-intro"><strong>Die Welt <span>hinter dem Blick.</span></strong><small>Richte dein Handy aus. Entdecke, was um dich herum verborgen liegt.</small></div>
-
-    <main class="workspace">
-      <aside class="sidebar" aria-label="Orte und Einstellungen">
-        <div class="intro"><div class="eyebrow">GO BEYOND THE OBVIOUS</div><h1>Die Welt<br/><em>hinter dem Blick.</em></h1><p class="lede">Deine Umgebung steckt voller Geschichten. Schwenke dein Smartphone und finde besondere Orte in jeder Richtung.</p></div>
-        <div class="location-card">
+      <div class="header-right" role="toolbar" aria-label="App-Werkzeuge">
+        <div class="toolbar-dropdown" id="modeDropdown">
+          <button id="modeMenuBtn" class="header-btn toolbar-trigger" type="button" aria-expanded="false" aria-controls="modeMenu" aria-label="Modus auswählen" title="Ansicht und Richtung wählen">
+            <svg class="glyph tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span class="tool-label">Modus</span><svg class="menu-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg>
+          </button>
+          <div class="tool-popover mode-popover" id="modeMenu" role="region" aria-label="Ansicht und Richtung" hidden>
+            <div class="popover-overline">ANSICHT WÄHLEN</div>
+            <div class="dock-switch mode-options" role="group" aria-label="Ansicht wählen">
+              <button id="lensTab" type="button" class="dock-tab active" aria-pressed="true">◉ Entdecken</button>
+              <button id="radarTab" type="button" class="dock-tab" aria-pressed="false">⌾ Radar</button>
+              <button id="wavesTab" type="button" class="dock-tab" aria-pressed="false">≋ Wellen</button>
+            </div>
+            <div class="dock-heading">
+              <div class="labels"><span>RICHTUNG <strong id="manualLabel">45°</strong></span><span id="sliderNote">ZIEHEN ZUM ERKUNDEN</span></div>
+              <input id="headingSlider" type="range" min="0" max="359" step="1" value="45" aria-label="Blickrichtung manuell einstellen" />
+            </div>
+            <p class="popover-help">Tipp: Du kannst auch direkt über die Ansicht wischen.</p>
+            <div class="mode-install">
+              <button id="installBtn" class="header-btn primary mode-install-btn" type="button" title="App auf dem Gerät installieren"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v13m-5-5 5 5 5-5M4 16v4h16v-4"/></svg><span>App installieren</span></button>
+            </div>
+          </div>
+        </div>
+        <button class="sensor-btn" id="sensorBtn" type="button" aria-pressed="false" aria-label="Sensor aktivieren" title="Sensor aktivieren">
+          <svg class="glyph tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(-14 12 12)"><rect x="8" y="3.5" width="8" height="17" rx="1.8"/><path d="M11 17.5h2"/></g><path d="M4.3 7.3a8 8 0 0 0-1.1 8.3M19.2 6.8a8 8 0 0 1 1.3 8.8"/></svg><span id="sensorLabel">Sensor aktivieren</span>
+        </button>
+        <div class="toolbar-dropdown" id="positionDropdown">
+          <button id="positionMenuBtn" class="header-btn toolbar-trigger" type="button" aria-expanded="false" aria-controls="positionMenu" aria-label="Position auswählen" title="Standort wählen">
+            <svg class="glyph tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="tool-label">Position</span><svg class="menu-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg>
+          </button>
+          <div class="tool-popover position-popover" id="positionMenu" role="region" aria-label="Explorer-Standort" hidden>
+            <div class="location-card">
           <div class="location-head">
             <div class="location-heading"><div class="loc-icon"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 4 9.5 14.5 4 20l2.5-8.5L20 4Z"/><path d="m9.5 14.5 3 3"/></svg></div>
               <div><div class="section-overline">DEIN EXPLORER-STANDORT</div><div class="location-name" id="locationName">Berlin · Demo</div></div>
@@ -263,6 +66,18 @@
           <div class="loc-actions"><button class="action-btn" id="locateBtn" type="button"><svg class="glyph sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg> Mein Standort</button><button class="mini-btn" id="coordinateBtn" type="button" title="Standortkoordinaten eingeben">Koordinaten</button></div>
           <p class="kbd-help">Für Live-Orte werden Standortkoordinaten an den OSM-Dienst gesendet.</p>
         </div>
+          </div>
+        </div>
+        <button id="cameraBtn" class="header-btn icon-action" type="button" aria-pressed="false" title="Kamera ein-/ausschalten" aria-label="Kamera ein-/ausschalten"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 5 16 7h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4l2-2h4Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="btn-label">Kamera</span></button>
+        <button id="placesToggle" class="header-btn places-toggle" type="button" aria-controls="placesSidebar" aria-expanded="false" aria-label="Orte und Filter anzeigen" title="Orte und Filter anzeigen"><svg class="glyph tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 9 9.5-6 9.5 6"/><path d="M4 10h16M4 20h16M6.5 10v10M10.2 10v10M13.8 10v10M17.5 10v10"/></svg><span class="tool-label">Orte</span></button>
+      </div>
+    </header>
+
+
+    <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+    <main class="workspace">
+      <aside class="sidebar" id="placesSidebar" aria-label="Orte und Filter">
+        <div class="sidebar-head"><div><div class="section-overline">DEINE UMGEBUNG</div><h2>Orte entdecken</h2></div><button id="sidebarClose" class="sidebar-close" type="button" aria-label="Orte schließen">×</button></div>
         <div class="field-label">WAS MÖCHTEST DU ENTDECKEN?</div>
         <div class="filters" id="filters" role="group" aria-label="Orte filtern">
           <button class="chip active" data-filter="all" aria-pressed="true">Alle Orte</button>
@@ -295,6 +110,26 @@
             </svg>
             <div class="scene-grid"></div><div class="scan-sweep"></div>
           </div>
+          <div class="waves-stage" id="wavesStage" aria-label="Invisible Waves: visualisierte, nicht geortete Funk- und Netzwerkdaten">
+            <canvas id="wavesCanvas" aria-hidden="true"></canvas>
+            <div class="wave-heading" aria-hidden="true">
+              <span class="wave-kicker"><span class="wave-kicker-dot"></span> SIGNAL EXPLORER / V5</span>
+              <h2>INVISIBLE<br><em>WAVES</em><span class="wave-title-dot">.</span></h2>
+              <p>Entdecke die digitale Ebene deiner Umgebung.</p>
+            </div>
+            <div id="waveBeacons" class="wave-beacons" role="group" aria-label="Visualisierte Signalprojektionen"></div>
+            <div class="wave-console" aria-label="Signal-Scanner-Einstellungen">
+              <div class="wave-console-head"><span><span class="pulse"></span> SIGNAL MONITOR</span><span id="wavesLiveBadge">0 BROWSER · 4 DEMO</span></div>
+              <div class="wave-stat-grid">
+                <div class="wave-stat"><div class="wave-stat-label">NETZWERKSTATUS</div><strong id="wavesNetworkTitle">Verbindung wird geprüft</strong><small id="wavesNetworkDetail">Browserdaten werden gelesen</small></div>
+                <div class="wave-stat"><div class="wave-stat-label">BLUETOOTH</div><strong id="wavesBleCount">0 freigegeben</strong><small>Nur Geräte mit deiner Freigabe</small></div>
+              </div>
+              <div class="wave-focus" aria-live="polite"><div class="wave-focus-title"><span>FOKUS</span><button id="wavesListButton" type="button" title="Nächste Projektion auswählen">↻ Durchschalten</button></div><strong id="waveFocusName">Scanner bereit</strong><small id="waveFocusDetail">Die Quellen werden lokal erfasst.</small></div>
+              <div class="wave-console-actions"><button id="waveDemoToggle" type="button" class="wave-demo-toggle active" aria-pressed="true">Demo: An</button><button id="waveBluetoothBtn" type="button" class="wave-bluetooth-btn">+ Bluetooth wählen</button></div>
+              <div class="wave-console-foot"><span id="wavesSourceCount">0 PROJEKTIONEN</span><span>RICHTUNGEN: ILLUSTRATIV</span></div>
+              <p id="wavesDemoHint" class="wave-disclaimer">Keine Funkpeilung und kein WLAN-Netzwerkscan. Wellen und Positionen sind eine Interpretation.</p>
+            </div>
+          </div>
           <div class="view-top"><div class="view-tag"><span class="pulse"></span><span id="viewModeLabel">DEMO · BERLIN</span></div><div class="bearing"><strong id="headingValue">045°</strong><span id="headingCardinal">NE</span><small id="headingSource">MANUELLE RICHTUNG</small></div></div>
           <div id="bearingRuler" class="bearing-ruler" aria-hidden="true"></div>
           <div id="arMarkers" class="ar-markers" aria-label="Orte in Blickrichtung"></div>
@@ -303,382 +138,11 @@
           <div id="detailCard" class="detail-card" aria-live="polite"></div>
           <div class="viewport-bottom"><div class="radar-card"><div class="radar-head"><span>RADAR</span><span id="radarRange">10 KM</span></div><canvas id="radarCanvas" width="128" height="128" tabindex="0" aria-label="Kleines Radar; Punkt auswählen"></canvas></div><div class="view-footnote"><strong id="visibleLabel">0 ORTE IM BLICK</strong><span id="viewHint">Schiebe den Richtungsregler oder aktiviere den Kompass.</span></div></div>
         </div>
-        <div class="viewer-dock">
-          <div class="dock-switch" role="group" aria-label="Ansicht wählen"><button id="lensTab" type="button" class="dock-tab active" aria-pressed="true">◉ Entdecken</button><button id="radarTab" type="button" class="dock-tab" aria-pressed="false">⌾ Radar</button></div>
-          <div class="dock-heading"><div class="labels"><span>RICHTUNG <strong id="manualLabel">45°</strong></span><span id="sliderNote">ZIEHEN ZUM ERKUNDEN</span></div><input id="headingSlider" type="range" min="0" max="359" step="1" value="45" aria-label="Blickrichtung einstellen" /></div>
-          <button class="sensor-btn" id="sensorBtn" type="button"><svg class="glyph sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 9 9"/><path d="m12 3 3 3-3 3"/><path d="m7 16 5-9 5 9-5-2-5 2Z"/></svg><span id="sensorLabel">Kompass aktivieren</span></button>
-        </div>
       </section>
     </main>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <dialog id="coordinateDialog"><form id="coordinateForm" method="dialog"><h2>Standort wählen</h2><p>Gib Koordinaten ein, um besondere Orte in einem anderen Gebiet zu entdecken. Es wird keine Adresse benötigt.</p><div class="dialog-fields"><label>Breitengrad<input id="latitudeInput" type="number" step="any" min="-90" max="90" value="52.5206" required /></label><label>Längengrad<input id="longitudeInput" type="number" step="any" min="-180" max="180" value="13.4050" required /></label></div><div class="dialog-actions"><button type="button" class="mini-btn" id="cancelCoordinate">Abbrechen</button><button type="submit" class="action-btn">Orte finden</button></div></form></dialog>
-  <script>
-  (() => {
-    'use strict';
-    const $ = (selector) => document.querySelector(selector);
-    const DEG = Math.PI / 180;
-    const DEMO_CENTER = { lat: 52.5206, lon: 13.4050, name: 'Berlin · Demo' };
-    const DEMO = [
-      {id:'d1',name:'Märchenbrunnen',lat:52.5284,lon:13.4236,category:'culture',description:'Ein Brunnenensemble im Volkspark Friedrichshain mit Figuren aus Märchen.',tag:'Brunnen & Kunst'},
-      {id:'d2',name:'Gedenkstätte Berliner Mauer',lat:52.5350,lon:13.3904,category:'history',description:'Ein Erinnerungsort zur Geschichte der Berliner Mauer an der Bernauer Straße.',tag:'Geschichte'},
-      {id:'d3',name:'Bebelplatz',lat:52.5166,lon:13.3937,category:'history',description:'Historischer Platz in Mitte mit einem unterirdischen Denkmal zur Bücherverbrennung.',tag:'Geschichte'},
-      {id:'d4',name:'Viktoriapark',lat:52.4883,lon:13.3816,category:'nature',description:'Park am Kreuzberg mit Wasserfall, Wegen und Aussicht über Teile der Stadt.',tag:'Natur'},
-      {id:'d5',name:'Teufelsberg',lat:52.4979,lon:13.2408,category:'view',description:'Erhebung im Grunewald mit markanten ehemaligen Abhöranlagen und weitem Blick.',tag:'Aussicht'},
-      {id:'d6',name:'Museumsinsel',lat:52.5209,lon:13.4010,category:'culture',description:'Museumsensemble auf einer Insel in der Spree und UNESCO-Welterbestätte.',tag:'Kultur'},
-      {id:'d7',name:'Nikolaiviertel',lat:52.5169,lon:13.4068,category:'history',description:'Historisch geprägtes Quartier im Zentrum Berlins rund um die Nikolaikirche.',tag:'Geschichte'},
-      {id:'d8',name:'Oberbaumbrücke',lat:52.5019,lon:13.4450,category:'view',description:'Bekannte Brücke über die Spree zwischen Kreuzberg und Friedrichshain.',tag:'Aussicht'},
-      {id:'d9',name:'Volkspark Friedrichshain',lat:52.5267,lon:13.4379,category:'nature',description:'Weitläufiger Stadtpark mit Spazierwegen, Bäumen und Grünflächen.',tag:'Natur'},
-      {id:'d10',name:'Humboldt Forum',lat:52.5175,lon:13.4021,category:'culture',description:'Kultur- und Ausstellungsort im rekonstruierten Berliner Schloss.',tag:'Kultur'},
-      {id:'d11',name:'Mauerpark',lat:52.5430,lon:13.4023,category:'nature',description:'Öffentlicher Park entlang eines ehemaligen Abschnitts der Berliner Mauer.',tag:'Natur'},
-      {id:'d12',name:'Zionskirche',lat:52.5344,lon:13.4059,category:'history',description:'Historische Kirche am Zionskirchplatz in Berlin-Mitte.',tag:'Geschichte'}
-    ];
-    const CATEGORY = {
-      history: { label:'Geschichte', symbol:'⌂' }, nature:{label:'Natur',symbol:'✿'},
-      view:{label:'Aussicht',symbol:'↗'}, culture:{label:'Kultur',symbol:'✦'}
-    };
-    const state = {
-      coords:{...DEMO_CENTER}, demo:true, points:[], filter:'all', radius:10, query:'', heading:45,
-      selected:null, mode:'lens', sensorOn:false, sensorPending:false, sensorKind:'manual',
-      sensorOrigin:null, sensorBase:45, gotAbsolute:false, camera:null, busy:false,
-      saved:new Set(), installPrompt:null, radarHits:[], queryId:0
-    };
-    try { state.saved = new Set(JSON.parse(localStorage.getItem('hiddenPlacesSaved') || '[]')); } catch (_) { /* Private browsing */ }
-    const clamp = (n,min,max) => Math.max(min,Math.min(max,n));
-    const norm = (n) => ((n % 360) + 360) % 360;
-    const delta = (a,b) => ((a-b+540)%360)-180;
-    const toRad = n => n*DEG;
-    const escapeHtml = str => String(str == null ? '' : str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const radToDeg = n => n/DEG;
-    function distanceKm(a,b) { const dLat=toRad(b.lat-a.lat), dLon=toRad(b.lon-a.lon); const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2; return 6371.0088*2*Math.atan2(Math.sqrt(s),Math.sqrt(1-s)); }
-    function bearingTo(a,b) { const lat1=toRad(a.lat),lat2=toRad(b.lat),dlon=toRad(b.lon-a.lon); return norm(radToDeg(Math.atan2(Math.sin(dlon)*Math.cos(lat2),Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dlon)))); }
-    function displayDistance(km) { return km < 1 ? `${Math.round(km*1000)} m` : `${km.toFixed(km < 10 ? 1 : 0).replace('.',',')} km`; }
-    function cardinal(deg) { return ['N','NE','E','SE','S','SW','W','NW'][Math.round(deg/45)%8]; }
-    function toast(message) { const el=$('#toast'); el.textContent=message; el.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove('show'),4100); }
-    function enrich(points) { return points.map(p=>({...p,dist:distanceKm(state.coords,p),bearing:bearingTo(state.coords,p)})).sort((a,b)=>a.dist-b.dist); }
-    function getFiltered() { return state.points.filter(p=>p.dist<=state.radius && (state.filter==='all' || (state.filter==='saved'?state.saved.has(p.id):p.category===state.filter)) && (!state.query || p.name.toLocaleLowerCase('de').includes(state.query))).sort((a,b)=>a.dist-b.dist); }
-    function getSelected() { return state.points.find(p=>p.id===state.selected); }
-    function updateLocation() {
-      $('#locationName').textContent=state.coords.name;
-      const lat=state.coords.lat,lon=state.coords.lon;
-      $('#locationCoords').textContent=`${Math.abs(lat).toFixed(4)}° ${lat>=0?'N':'S'} · ${Math.abs(lon).toFixed(4)}° ${lon>=0?'E':'W'}${state.demo?' · Beispieldaten':''}`;
-      $('#viewModeLabel').textContent=state.demo?'DEMO · BERLIN':'LIVE · OSM-DATEN';
-      $('#dataNote').innerHTML=state.demo ? 'Demo-Orte sind Beispiele. Für echte Orte Standort wählen. Datenquelle: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap-Mitwirkende</a> (ODbL).' : 'Orte aus <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap-Mitwirkende</a> (ODbL). Standort-Koordinaten werden bei der Suche an den Overpass-Server übermittelt, aber von dieser App nicht dauerhaft gespeichert.';
-    }
-    function renderList() {
-      const points=getFiltered();
-      $('#resultCount').textContent=`${points.length} ${points.length===1?'Ort':'Orte'}`;
-      $('#placesList').innerHTML = points.length ? points.slice(0,60).map(p=>{
-        const cat=CATEGORY[p.category]; const selected=p.id===state.selected;
-        return `<article class="place-item${selected?' selected':''}"><button class="place-main" type="button" data-open="${p.id}" aria-label="${escapeHtml(p.name)} auswählen"><span class="place-icon ${p.category}"><span aria-hidden="true" style="font-size:22px">${cat.symbol}</span></span><span class="place-data"><span class="place-title" style="display:block">${escapeHtml(p.name)}</span><span class="place-sub"><span>${displayDistance(p.dist)}</span><span>· ${cat.label}</span><span>· ${Math.round(p.bearing)}°</span></span></span></button><button class="bookmark${state.saved.has(p.id)?' saved':''}" data-save="${p.id}" type="button" aria-label="${state.saved.has(p.id)?'Aus Merkliste entfernen':'In Merkliste speichern'}" title="Merkliste">${state.saved.has(p.id)?'★':'☆'}</button></article>`;
-      }).join('') : `<div class="empty-state">Hier gibt es mit diesen Filtern noch keine Treffer. Wechsle die Kategorie, erhöhe den Radius oder ändere deinen Standort.</div>`;
-    }
-    function renderRuler() {
-      const h=state.heading;
-      let html='';
-      for(let deg=0;deg<360;deg+=15) {
-        const diff=delta(deg,h);
-        if(Math.abs(diff)>65) continue;
-        const left=50+(diff/65)*50;
-        const text=(deg%45===0)?cardinal(deg):String(deg).padStart(3,'0');
-        html+=`<div class="bearing-tick" style="left:${left}%">${text}</div>`;
-      }
-      $('#bearingRuler').innerHTML=html;
-    }
-    function renderMarkers() {
-      const points=getFiltered();
-      const visible=points.filter(p=>Math.abs(delta(p.bearing,state.heading))<=58).sort((a,b)=>Math.abs(delta(a.bearing,state.heading))-Math.abs(delta(b.bearing,state.heading))).slice(0,7);
-      // Space markers at staggered heights to reduce collisions in dense areas.
-      const used=[];
-      const html=visible.map((p,i)=>{
-        const d=delta(p.bearing,state.heading);
-        const edge=window.innerWidth<=400?21:window.innerWidth<=760?18:12;
-        const x=clamp(50+(d/58)*44,edge,100-edge);
-        let y=33+(i%4)*10;
-        for(let retries=0;retries<4;retries++) {
-          if(!used.some(pt=>Math.abs(pt.x-x)<18&&Math.abs(pt.y-y)<12)) break;
-          y=y>58?30:y+13;
-        }
-        used.push({x,y});
-        return `<button type="button" class="ar-marker${p.id===state.selected?' selected':''}" data-open="${p.id}" style="left:${x}%;top:${y}%" aria-label="${escapeHtml(p.name)} ${displayDistance(p.dist)}"><div class="marker-top"><span class="marker-dot"></span>${displayDistance(p.dist)} · ${CATEGORY[p.category].label}</div><div class="marker-name">${escapeHtml(p.name)}</div></button>`;
-      }).join('');
-      $('#arMarkers').innerHTML=html;
-      $('#visibleLabel').textContent=`${visible.length} ${visible.length===1?'ORT':'ORTE'} IM BLICK`;
-      $('#viewHint').textContent=visible.length ? 'Tippe auf einen Marker für Details.' : 'Drehe dich, um Orte zu finden.';
-    }
-    function radarDraw(canvas,large=false) {
-      const cssSize=large?Math.min(canvas.getBoundingClientRect().width||360,480):128;
-      const logical=large?480:128;
-      const ctx=canvas.getContext('2d'); if(!ctx)return;
-      ctx.clearRect(0,0,logical,logical);
-      const center=logical/2,radius=large?205:51,scale=radius/state.radius;
-      const line=large?1.4:0.85;
-      ctx.strokeStyle='rgba(197,246,174,.23)';ctx.lineWidth=line;
-      for(const ratio of [.33,.66,1]) {ctx.beginPath();ctx.arc(center,center,radius*ratio,0,Math.PI*2);ctx.stroke();}
-      ctx.beginPath();ctx.moveTo(center-radius,center);ctx.lineTo(center+radius,center);ctx.moveTo(center,center-radius);ctx.lineTo(center,center+radius);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,-Math.PI/2-toRad(58),-Math.PI/2+toRad(58));ctx.closePath();ctx.fillStyle='rgba(213,250,140,.055)';ctx.fill();
-      if(large) { ctx.fillStyle='#cbeaba';ctx.font='800 13px sans-serif';ctx.textAlign='center';ctx.fillText('VORNE',center,center-radius-17);ctx.fillText(`${state.radius} KM`,center,center+radius+30); }
-      const hits=[];
-      for(const p of getFiltered().slice().reverse()) {
-        const angle=toRad(delta(p.bearing,state.heading))-Math.PI/2;
-        const rr=clamp(p.dist*scale,0,radius);
-        const x=center+Math.cos(angle)*rr, y=center+Math.sin(angle)*rr;
-        ctx.beginPath();ctx.arc(x,y,p.id===state.selected?(large?8:4.3):(large?5:2.8),0,Math.PI*2);
-        ctx.fillStyle=p.id===state.selected?'#ffffff':({history:'#e8c593',nature:'#8deab6',view:'#a2d6ff',culture:'#e7b8f9'}[p.category]);ctx.fill();
-        if(p.id===state.selected) {ctx.strokeStyle='#d5fa8c';ctx.lineWidth=large?3:1.8;ctx.stroke();}
-        hits.push({id:p.id,x,y,size:large?18:12});
-      }
-      ctx.fillStyle='#d5fa8c';ctx.beginPath();ctx.moveTo(center,center-(large?12:7));ctx.lineTo(center-(large?7:4),center+(large?8:5));ctx.lineTo(center+(large?7:4),center+(large?8:5));ctx.closePath();ctx.fill();
-      if(large)state.radarHitsBig=hits;else state.radarHits=hits;
-    }
-    function drawRadar() { radarDraw($('#radarCanvas')); radarDraw($('#radarBig'),true); $('#radarRange').textContent=`${state.radius} KM`; }
-    function renderDetail() {
-      const el=$('#detailCard'),p=getSelected();
-      if(!p) {el.classList.remove('open');el.innerHTML='';return;}
-      const link=`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(p.lat+','+p.lon)}&travelmode=walking`;
-      const osm=`https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=17/${p.lat}/${p.lon}`;
-      el.innerHTML=`<button class="detail-close" type="button" id="detailClose" aria-label="Details schließen">×</button><div class="detail-category">${CATEGORY[p.category].label} · ${state.demo?'BEISPIELORT':'OPENSTREETMAP'}</div><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.description||'Ein spannender Ort in deiner Umgebung. Finde heraus, was ihn besonders macht.')}</p><div class="detail-meta"><span>◎ ${displayDistance(p.dist)} entfernt</span><span>↗ ${Math.round(p.bearing)}° ${cardinal(p.bearing)}</span></div><div class="detail-actions"><a href="${link}" target="_blank" rel="noopener noreferrer">Route öffnen ↗</a><button type="button" id="detailSave">${state.saved.has(p.id)?'★ Gespeichert':'☆ Merken'}</button><a href="${osm}" target="_blank" rel="noopener noreferrer" style="flex:0;white-space:nowrap;background:#2d3d33;color:#e6f2df">Karte</a></div>`;
-      el.classList.add('open');
-      $('#detailClose').addEventListener('click',()=>{state.selected=null;renderAll();});
-      $('#detailSave').addEventListener('click',()=>toggleSave(p.id));
-    }
-    function renderHeading() {
-      $('#headingValue').textContent=String(Math.round(state.heading)%360).padStart(3,'0')+'°';
-      $('#manualLabel').textContent=Math.round(state.heading)+'°';
-      $('#headingCardinal').textContent=cardinal(state.heading);
-      $('#headingSlider').value=Math.round(state.heading);
-      $('#headingSource').textContent=state.sensorOn?(state.sensorKind==='absolute'?'KOMPASS AKTIV':'RELATIVE AUSRICHTUNG'):'MANUELLE RICHTUNG';
-      $('#sliderNote').textContent=state.sensorOn?'MANUELL ÜBERNEHMEN':'ZIEHEN ZUM ERKUNDEN';
-      renderRuler();renderMarkers();drawRadar();
-    }
-    function renderAll() { updateLocation();renderList();renderDetail();renderHeading(); }
-    function setPoints(points) { state.points=enrich(points);state.selected=null;renderAll(); }
-    function toggleSave(id) {
-      if(state.saved.has(id))state.saved.delete(id);else state.saved.add(id);
-      try {localStorage.setItem('hiddenPlacesSaved',JSON.stringify([...state.saved]));}catch(_){}
-      renderList();renderDetail();renderHeading();
-    }
-    function selectPoint(id) { if(!state.points.some(p=>p.id===id))return;state.selected=id;renderList();renderDetail();renderHeading(); }
-    function setMode(mode) {
-      state.mode=mode;
-      $('#viewport').classList.toggle('radar-mode',mode==='radar');
-      $('#lensTab').classList.toggle('active',mode==='lens');$('#radarTab').classList.toggle('active',mode==='radar');
-      $('#lensTab').setAttribute('aria-pressed',String(mode==='lens'));$('#radarTab').setAttribute('aria-pressed',String(mode==='radar'));
-      drawRadar();
-    }
-    function setHeading(value,manual=false) {
-      if(manual&&state.sensorOn)stopSensor();
-      state.heading=norm(value);renderHeading();
-    }
-    function stopSensor() {
-      window.removeEventListener('deviceorientation',handleSensor);
-      window.removeEventListener('deviceorientationabsolute',handleSensor);
-      state.sensorOn=false;state.sensorPending=false;state.sensorOrigin=null;state.gotAbsolute=false;
-      $('#sensorBtn').classList.remove('on');$('#sensorLabel').textContent='Kompass aktivieren';
-      renderHeading();
-    }
-    function handleSensor(event) {
-      let heading=null,kind='relative';
-      if(typeof event.webkitCompassHeading==='number'&&Number.isFinite(event.webkitCompassHeading)) {
-        heading=norm(event.webkitCompassHeading);kind='absolute';
-      } else if(event.absolute===true&&typeof event.alpha==='number') {
-        // Absolute alpha is clockwise around the device's z-axis; account for screen rotation.
-        const angle=screen.orientation&&Number.isFinite(screen.orientation.angle)?screen.orientation.angle:0;
-        heading=norm(360-event.alpha+angle);kind='absolute';
-      } else if(!state.gotAbsolute&&typeof event.alpha==='number') {
-        // A relative sensor must NOT be represented as a real north bearing.
-        if(state.sensorOrigin===null) {state.sensorOrigin=event.alpha;state.sensorBase=state.heading;}
-        heading=norm(state.sensorBase+state.sensorOrigin-event.alpha);kind='relative';
-      }
-      if(heading===null)return;
-      if(kind==='absolute') state.gotAbsolute=true;
-      if(state.gotAbsolute&&kind!=='absolute')return;
-      state.sensorKind=kind;
-      const diff=delta(heading,state.heading);
-      state.heading=norm(state.heading+diff*.32);
-      if(!state.sensorOn) {
-        state.sensorOn=true;state.sensorPending=false;
-        $('#sensorBtn').classList.add('on');$('#sensorLabel').textContent='Kompass aktiv';
-        toast(kind==='absolute'?'Kompass aktiv – bewege dein Handy.':'Bewegungssensor aktiv. Die Richtung ist relativ, nicht auf Norden kalibriert.');
-      }
-      if(!state.sensorRAF)state.sensorRAF=requestAnimationFrame(()=>{state.sensorRAF=null;renderHeading();});
-    }
-    async function enableSensor() {
-      if(state.sensorOn){stopSensor();toast('Manuelle Richtungssteuerung aktiviert.');return;}
-      if(!('DeviceOrientationEvent' in window)) {toast('Auf diesem Gerät sind keine Orientierungssensoren verfügbar. Nutze den Regler.');return;}
-      if(!isSecureContext){toast('Für Sensoren HTTPS oder localhost verwenden.');return;}
-      try {
-        if(typeof DeviceOrientationEvent.requestPermission==='function') {
-          // requestPermission MUST be called directly inside the click event.
-          const allowed=await DeviceOrientationEvent.requestPermission(true);
-          if(allowed!=='granted'){toast('Sensorfreigabe nicht erteilt. Der manuelle Modus funktioniert weiterhin.');return;}
-        }
-        state.sensorPending=true;
-        window.addEventListener('deviceorientationabsolute',handleSensor);
-        window.addEventListener('deviceorientation',handleSensor);
-        setTimeout(()=>{if(state.sensorPending&&!state.sensorOn){state.sensorPending=false;stopSensor();toast('Keine verwertbaren Sensordaten. Nutze den Regler.');}},3500);
-      }catch(error){toast('Kompass konnte nicht aktiviert werden: '+(error.message||'Berechtigung fehlt'));}
-    }
-    async function toggleCamera() {
-      if(state.camera){ state.camera.getTracks().forEach(t=>t.stop());state.camera=null;$('#cameraVideo').srcObject=null;$('#viewport').classList.remove('camera-active');$('#cameraBtn').setAttribute('aria-pressed','false');toast('Kamera ausgeschaltet.');return; }
-      if(!navigator.mediaDevices?.getUserMedia){toast('Kamera erfordert HTTPS und einen unterstützten Browser.');return;}
-      try {
-        const stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'}}});
-        state.camera=stream;$('#cameraVideo').srcObject=stream;
-        await $('#cameraVideo').play().catch(()=>{});
-        $('#viewport').classList.add('camera-active');$('#cameraBtn').setAttribute('aria-pressed','true');
-        toast('Kamera aktiv. Die Marker sind richtungsbasiert und können leicht abweichen.');
-      }catch(e){toast('Kamerazugriff nicht möglich: '+(e.name==='NotAllowedError'?'Berechtigung verweigert':e.message));}
-    }
-    function useDemo() {
-      state.coords={...DEMO_CENTER};state.demo=true;setPoints(DEMO);toast('Berlin-Demo geladen. Wähle „Mein Standort“ für echte Orte.');
-    }
-    function categoryOf(tags) {
-      if(tags.natural||tags.leisure==='nature_reserve')return 'nature';
-      if(tags.tourism==='viewpoint'||tags.man_made==='tower'||tags.man_made==='lighthouse')return 'view';
-      if(tags.historic)return 'history';
-      return 'culture';
-    }
-    function labelOf(tags) { return tags['name:de']||tags.name||''; }
-    function parseOSM(elements) {
-      const parsed=[];const dedupe=new Set();
-      for(const e of elements) {
-        const t=e.tags||{},lat=e.lat??e.center?.lat,lon=e.lon??e.center?.lon;
-        const name=labelOf(t);
-        if(!name||!Number.isFinite(lat)||!Number.isFinite(lon))continue;
-        const normalized=name.toLocaleLowerCase('de').trim();
-        if(dedupe.has(normalized))continue;
-        dedupe.add(normalized);
-        let desc=t['description:de']||t.description||'';
-        if(desc.length>200)desc=desc.slice(0,197)+'…';
-        parsed.push({id:`osm-${e.type}-${e.id}`,name,lat,lon,category:categoryOf(t),description:desc});
-      }
-      return parsed;
-    }
-    const OSM_ENDPOINTS=['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter'];
-    function buildQuery({lat,lon}) {
-      const l=lat.toFixed(5),g=lon.toFixed(5),loc=`(around:15000,${l},${g})`;
-      return `[out:json][timeout:25];(nwr${loc}[name][historic~"castle|ruins|archaeological_site|city_gate|fort|monument|memorial|tomb|wayside_shrine"];nwr${loc}[name][tourism~"viewpoint|attraction|museum|gallery|artwork"];nwr${loc}[name][natural~"peak|cave_entrance|rock|cliff|spring|waterfall"];nwr${loc}[name][man_made~"tower|lighthouse|windmill"];nwr${loc}[name][leisure="nature_reserve"];);out center 600;`;
-    }
-    async function queryOSM(coords) {
-      const query=buildQuery(coords);let lastError;
-      for(const endpoint of OSM_ENDPOINTS) {
-        const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),28000);
-        try {
-          const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:new URLSearchParams({data:query}),signal:controller.signal});
-          if(!response.ok)throw Error(`Server antwortet mit HTTP ${response.status}`);
-          const data=await response.json();
-          if(!Array.isArray(data.elements))throw Error('Ungültige Serverantwort');
-          return parseOSM(data.elements);
-        }catch(error){lastError=error;}finally{clearTimeout(timer);}
-      }
-      throw lastError||new Error('Keine Verbindung zum Ortsdienst');
-    }
-    async function loadLive(coords,name) {
-      if(state.busy)return;
-      state.busy=true;state.queryId++;
-      const requestId=state.queryId;
-      $('#locateBtn').disabled=true;$('#locateBtn').textContent='Suche läuft …';
-      state.coords={lat:coords.lat,lon:coords.lon,name};
-      state.demo=false;updateLocation();
-      try {
-        let points;
-        const key=`hp-cache:${coords.lat.toFixed(3)}:${coords.lon.toFixed(3)}`;
-        try {const cached=JSON.parse(sessionStorage.getItem(key)||'null');if(cached&&Date.now()-cached.time<15*60*1000)points=cached.points;}catch(_){}
-        if(!points) {
-          points=await queryOSM(coords);
-          try {sessionStorage.setItem(key,JSON.stringify({time:Date.now(),points}));}catch(_){}
-        }
-        if(requestId!==state.queryId)return;
-        setPoints(points);
-        toast(points.length?`${points.length} Orte aus OpenStreetMap geladen.`:'Keine passenden OSM-Orte in diesem Umkreis gefunden.');
-      } catch(e) {
-        if(requestId!==state.queryId)return;
-        setPoints([]);
-        toast('Orte konnten nicht geladen werden. Prüfe deine Verbindung oder probiere die Demo.');
-        console.warn('Hidden Places / Overpass',e);
-      } finally {
-        state.busy=false;$('#locateBtn').disabled=false;
-        $('#locateBtn').innerHTML='<svg class="glyph sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg> Mein Standort';
-      }
-    }
-    function locate() {
-      if(!navigator.geolocation){toast('Standortbestimmung wird nicht unterstützt. Nutze Koordinaten.');return;}
-      if(!isSecureContext){toast('Für GPS ist HTTPS oder localhost nötig.');return;}
-      if(state.busy)return;
-      toast('Standort wird angefragt …');
-      navigator.geolocation.getCurrentPosition(pos=>loadLive({lat:pos.coords.latitude,lon:pos.coords.longitude},'Dein Standort'), err=>{
-        toast(err.code===1?'Standortzugriff verweigert. Alternativ Koordinaten eingeben.':'Standort nicht verfügbar. Versuche es erneut oder nutze Koordinaten.');
-      },{enableHighAccuracy:false,timeout:15000,maximumAge:60000});
-    }
-    function handleRadarClick(event,large) {
-      const canvas=event.currentTarget,rect=canvas.getBoundingClientRect();
-      const scale=(large?480:128)/rect.width;
-      const x=(event.clientX-rect.left)*scale,y=(event.clientY-rect.top)*scale;
-      const hit=(large?state.radarHitsBig:state.radarHits).reduce((best,p)=>{
-        const d=Math.hypot(p.x-x,p.y-y);
-        return d<(best?.dist??Infinity)?{id:p.id,dist:d}:best;
-      },null);
-      if(hit&&hit.dist<(large?23:13))selectPoint(hit.id);
-    }
-    function init() {
-      setPoints(DEMO);
-      $('#filters').addEventListener('click',ev=>{
-        const btn=ev.target.closest('[data-filter]');if(!btn)return;
-        state.filter=btn.dataset.filter;
-        document.querySelectorAll('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
-        state.selected=null;renderAll();
-      });
-      $('#placesList').addEventListener('click',ev=>{
-        const save=ev.target.closest('[data-save]');if(save){toggleSave(save.dataset.save);return;}
-        const open=ev.target.closest('[data-open]');if(open)selectPoint(open.dataset.open);
-      });
-      $('#arMarkers').addEventListener('click',ev=>{const open=ev.target.closest('[data-open]');if(open)selectPoint(open.dataset.open);});
-      $('#radiusSlider').addEventListener('input',ev=>{state.radius=+ev.target.value;$('#radiusLabel').textContent=state.radius+' km';if(getSelected()?.dist>state.radius)state.selected=null;renderAll();});
-      $('#searchInput').addEventListener('input',ev=>{state.query=ev.target.value.trim().toLocaleLowerCase('de');renderList();renderMarkers();drawRadar();});
-      $('#headingSlider').addEventListener('input',ev=>setHeading(+ev.target.value,true));
-      $('#sensorBtn').addEventListener('click',enableSensor);
-      $('#cameraBtn').addEventListener('click',toggleCamera);
-      $('#lensTab').addEventListener('click',()=>setMode('lens'));
-      $('#radarTab').addEventListener('click',()=>setMode('radar'));
-      $('#locateBtn').addEventListener('click',locate);
-      $('#demoBtn').addEventListener('click',useDemo);
-      $('#coordinateBtn').addEventListener('click',()=>{
-        $('#latitudeInput').value=state.coords.lat.toFixed(5);$('#longitudeInput').value=state.coords.lon.toFixed(5);
-        $('#coordinateDialog').showModal();
-      });
-      $('#cancelCoordinate').addEventListener('click',()=>$('#coordinateDialog').close());
-      $('#coordinateForm').addEventListener('submit',ev=>{
-        ev.preventDefault();const lat=Number($('#latitudeInput').value),lon=Number($('#longitudeInput').value);
-        if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180){toast('Bitte gültige Koordinaten eingeben.');return;}
-        $('#coordinateDialog').close();loadLive({lat,lon},'Eigene Koordinaten');
-      });
-      $('#radarCanvas').addEventListener('click',ev=>handleRadarClick(ev,false));
-      $('#radarBig').addEventListener('click',ev=>handleRadarClick(ev,true));
-      // Dragging the viewfinder simulates looking around; no external libraries needed.
-      let pointer=null;
-      $('#viewport').addEventListener('pointerdown',ev=>{
-        if(ev.target.closest('button,a,canvas,.detail-card'))return;
-        pointer={id:ev.pointerId,x:ev.clientX,y:ev.clientY,heading:state.heading};
-      });
-      $('#viewport').addEventListener('pointermove',ev=>{
-        if(!pointer||ev.pointerId!==pointer.id||Math.abs(ev.clientX-pointer.x)<3)return;
-        setHeading(pointer.heading-(ev.clientX-pointer.x)*.4,true);
-      });
-      ['pointerup','pointercancel','pointerleave'].forEach(type=>$('#viewport').addEventListener(type,()=>{pointer=null;}));
-      window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();state.installPrompt=event;});
-      $('#installBtn').addEventListener('click',async()=>{
-        if(state.installPrompt){const p=state.installPrompt;state.installPrompt=null;p.prompt();await p.userChoice;}
-        else if(matchMedia('(display-mode: standalone)').matches||navigator.standalone){toast('Die App ist bereits als App geöffnet.');}
-        else if(/iphone|ipad|ipod/i.test(navigator.userAgent)){toast('iPhone/iPad: Teilen → „Zum Home-Bildschirm“ auswählen.');}
-        else {toast('Im Browsermenü „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.');}
-      });
-      window.addEventListener('pagehide',()=>{if(state.camera)state.camera.getTracks().forEach(t=>t.stop());});
-      window.addEventListener('resize',drawRadar);
-      if('serviceWorker'in navigator&&isSecureContext){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}
-    }
-    init();
-  })();
-  </script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>

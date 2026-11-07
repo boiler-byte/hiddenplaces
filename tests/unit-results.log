@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: Geographic helpers: normalization, delta and compass bearings
+ok 1 - Geographic helpers: normalization, delta and compass bearings
+  ---
+  duration_ms: 2.003018
+  type: 'test'
+  ...
+# Subtest: Demo places are sorted by distance and derivable from central store
+ok 2 - Demo places are sorted by distance and derivable from central store
+  ---
+  duration_ms: 0.801284
+  type: 'test'
+  ...
+# Subtest: Overpass input query and OSM parsing
+ok 3 - Overpass input query and OSM parsing
+  ---
+  duration_ms: 0.571684
+  type: 'test'
+  ...
+# Subtest: Overpass endpoint fallback, using injected HTTP stub
+ok 4 - Overpass endpoint fallback, using injected HTTP stub
+  ---
+  duration_ms: 0.880697
+  type: 'test'
+  ...
+# Subtest: Untrusted OSM markup is escaped before rendering
+ok 5 - Untrusted OSM markup is escaped before rendering
+  ---
+  duration_ms: 0.196012
+  type: 'test'
+  ...
+# Subtest: Signal source labeling: browser readings never pretend to be RF scans
+ok 6 - Signal source labeling: browser readings never pretend to be RF scans
+  ---
+  duration_ms: 0.431076
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89.329668

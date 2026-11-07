@@ -1,0 +1,103 @@
+/* Hidden Places v5 / Invisible Waves: artistic projections of explicitly labeled data. */
+.mode-options { grid-template-columns:repeat(3, minmax(0,1fr)); gap:3px; }
+.mode-options .dock-tab { padding:9px 5px; letter-spacing:-.02em; }
+.waves-stage { display:none; position:absolute; inset:0; overflow:hidden; z-index:8; isolation:isolate; }
+.viewport.waves-mode .waves-stage { display:block; }
+.viewport.waves-mode .scene { opacity:.1; }
+.viewport.waves-mode.camera-active .scene { opacity:1; }
+.viewport.waves-mode .ar-markers,
+.viewport.waves-mode .radar-stage,
+.viewport.waves-mode .radar-card,
+.viewport.waves-mode .viewport-bottom,
+.viewport.waves-mode .detail-card,
+.viewport.waves-mode .crosshair,
+.viewport.waves-mode .horizon-label,
+.viewport.waves-mode .bearing-ruler { display:none!important; }
+.viewport.waves-mode .view-tag { border-color:#287579; background:#0a2a36de; color:#a6f9f6; }
+.viewport.waves-mode .view-tag .pulse { background:#67ebea; box-shadow:0 0 11px #59e3e6; }
+.viewport.waves-mode .bearing small { color:#91b6ba; }
+#wavesCanvas { position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
+.wave-heading { position:absolute; left:28px; top:118px; z-index:3; pointer-events:none; }
+.wave-kicker { font-size:10px; letter-spacing:.23em; font-weight:860; color:#8ad4d5; display:flex; align-items:center; gap:10px; }
+.wave-kicker-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#64e9ec; box-shadow:0 0 0 5px #41cfd218,0 0 20px #59dfe699; }
+.wave-heading h2 { margin:14px 0 8px; font-size:clamp(36px,5.2vw,75px); letter-spacing:-.075em; line-height:.9; font-weight:900; color:#eafff5; text-shadow:0 8px 36px #00202b5c; }
+.wave-heading h2 em { font-style:normal; background:linear-gradient(105deg,#65f0e8,#a5c7ff 80%); color:transparent; background-clip:text; }
+.wave-title-dot { color:#d5fa8c; }
+.wave-heading p { font-size:12px; color:#9fc5c6; max-width:320px; line-height:1.5; }
+.wave-beacons { position:absolute; inset:0; z-index:8; pointer-events:none; }
+.wave-beacon { --wave-rgb:91,231,240; position:absolute; transform:translate(-50%,-50%); padding:0; background:transparent; color:#f3fffc; border:0; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; pointer-events:auto; min-width:100px; max-width:160px; text-shadow:0 3px 14px #00161b; }
+.wave-beacon.wave-bluetooth { --wave-rgb:169,139,255; }
+.wave-beacon.wave-network { --wave-rgb:213,250,140; }
+.wave-beacon.wave-device { --wave-rgb:255,180,116; }
+.wave-beacon-pip { width:17px; height:17px; display:block; border:2px solid rgba(var(--wave-rgb),1); border-radius:50%; background:rgba(var(--wave-rgb),.23); box-shadow:0 0 0 6px rgba(var(--wave-rgb),.11),0 0 22px rgba(var(--wave-rgb),.75); transition:transform .2s, box-shadow .2s; }
+.wave-beacon:hover .wave-beacon-pip,.wave-beacon.selected .wave-beacon-pip { transform:scale(1.32); box-shadow:0 0 0 8px rgba(var(--wave-rgb),.2),0 0 34px rgba(var(--wave-rgb),.86); }
+.wave-beacon-text { max-width:170px; min-width:110px; padding:7px 9px; border-radius:9px; border:1px solid rgba(var(--wave-rgb),.36); background:#071b27c9; backdrop-filter:blur(10px); }
+.wave-beacon-text small { display:block; color:rgba(var(--wave-rgb),.95); letter-spacing:.055em; font-size:8px; font-weight:900; line-height:1.5; }
+.wave-beacon-text strong { display:block; margin-top:2px; font-size:11px; font-weight:790; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wave-beacon.selected .wave-beacon-text { border-color:rgba(var(--wave-rgb),1); }
+.wave-console { position:absolute; z-index:12; right:22px; bottom:22px; width:min(390px,calc(100% - 40px)); border:1px solid #35636b; background:linear-gradient(155deg,rgba(13,38,48,.97),rgba(7,24,34,.97)); box-shadow:0 22px 70px #0008, inset 0 1px 0 #75dbd01c; border-radius:19px; padding:17px; backdrop-filter:blur(21px); }
+.wave-console-head,.wave-console-foot,.wave-focus-title { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.wave-console-head { color:#a9fcf3; font-size:10px; font-weight:850; letter-spacing:.11em; padding-bottom:13px; border-bottom:1px solid #31505a; }
+.wave-console-head>span:first-child { display:flex; align-items:center; gap:8px; }
+.wave-console-head .pulse { background:#6aece8; box-shadow:0 0 13px #6aece8; }
+#wavesLiveBadge { font-size:9px; color:#aac7cc; text-align:right; white-space:nowrap; }
+.wave-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:13px; }
+.wave-stat { padding:11px 11px 9px; background:#1233419e; border:1px solid #365461; border-radius:11px; min-width:0; }
+.wave-stat-label { font-size:9px; color:#72bdc0; letter-spacing:.1em; font-weight:800; margin-bottom:8px; }
+.wave-stat strong { display:block; font-size:13px; font-weight:790; letter-spacing:-.035em; color:#e8fcf8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wave-stat small { display:block; margin-top:6px; font-size:10px; color:#95b4b9; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wave-focus { margin:12px 0; padding:0 2px; }
+.wave-focus-title { color:#77b6bf; font-weight:800; font-size:9px; letter-spacing:.13em; margin-bottom:4px; }
+.wave-focus-title button { border:0; background:none; color:#a8d6d5; font-size:10px; font-weight:750; padding:5px 0; }
+.wave-focus strong { display:block; color:#e4fff6; font-size:15px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.wave-focus small { display:block; color:#95b9bf; font-size:10px; line-height:1.4; margin-top:3px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.wave-console-actions { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.45fr); gap:8px; }
+.wave-console-actions button { border-radius:10px; padding:11px 8px; font-size:11px; font-weight:850; min-width:0; }
+.wave-demo-toggle { background:#152e37; color:#c6e4e2; border:1px solid #466c71; }
+.wave-demo-toggle.active { border-color:#a7d889; color:#d5fa8c; background:#2d453c; }
+.wave-bluetooth-btn { background:#73e4e5; border:1px solid #73e4e5; color:#072a32; }
+.wave-console-foot { margin-top:13px; color:#87b1bc; font-weight:800; font-size:9px; letter-spacing:.08em; }
+.wave-disclaimer { color:#83a4ad; font-size:10px; line-height:1.45; margin:9px 0 0; }
+@media (max-width:760px) {
+  .mode-options .dock-tab { font-size:11px; }
+  .wave-heading { left:18px; top:98px; }
+  .wave-heading h2 { font-size:clamp(39px,10vw,55px); }
+  .wave-heading p { font-size:11px; }
+  .wave-console { bottom:max(11px, env(safe-area-inset-bottom)); left:11px; right:11px; width:auto; border-radius:15px; padding:12px; }
+  .wave-stat-grid { gap:7px; margin-top:9px; }
+  .wave-stat { padding:9px; }
+  .wave-console-head { padding-bottom:9px; }
+  .wave-focus { margin:8px 0; }
+  .wave-console-actions button { padding:10px 7px; }
+  .wave-console-foot { margin-top:9px; }
+  .wave-beacon-text { padding:5px 7px; }
+  .wave-beacon-text strong { font-size:10px; }
+  .wave-beacon-text small { font-size:7px; }
+}
+@media (max-width:390px) {
+  .wave-heading { top:89px; left:14px; }
+  .wave-heading h2 { font-size:41px; }
+  .wave-heading p { max-width:230px; }
+  .wave-console { left:7px; right:7px; bottom:8px; padding:10px; }
+  .wave-stat { padding:8px; }
+  .wave-stat strong { font-size:12px; }
+  .wave-beacon { min-width:84px; }
+  .wave-beacon-text { min-width:88px; max-width:114px; }
+}
+@media (max-height:650px) and (max-width:760px) {
+  .wave-heading { top:70px; }
+  .wave-heading h2 { margin-top:7px; font-size:32px; }
+  .wave-heading p { display:none; }
+  .wave-console { padding:9px; }
+  .wave-stat { padding:7px; }
+  .wave-stat-label { margin-bottom:4px; }
+  .wave-stat small { display:none; }
+  .wave-focus { margin:5px 0; }
+  .wave-disclaimer { margin-top:5px; }
+  .wave-beacon-text small { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .wave-beacon-pip { transition:none; }
+}
+
+.wave-bluetooth-btn[aria-disabled="true"] { background:#24404c; border-color:#335968; color:#9bbdc3; }

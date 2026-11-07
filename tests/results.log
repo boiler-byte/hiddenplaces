@@ -1,0 +1,399 @@
+[
+  {
+    "test": "No JavaScript errors at 320px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 320px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 320px",
+    "passed": true
+  },
+  {
+    "test": "Edge-to-edge mobile viewer at 320px: {'x': 0, 'y': 56, 'width': 320, 'height': 784}",
+    "passed": true
+  },
+  {
+    "test": "Orte toggle visible at 320px",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 375px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 375px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 375px",
+    "passed": true
+  },
+  {
+    "test": "Edge-to-edge mobile viewer at 375px: {'x': 0, 'y': 56, 'width': 375, 'height': 784}",
+    "passed": true
+  },
+  {
+    "test": "Orte toggle visible at 375px",
+    "passed": true
+  },
+  {
+    "test": "Mode dropdown opens",
+    "passed": true
+  },
+  {
+    "test": "Install button inside Mode dropdown",
+    "passed": true
+  },
+  {
+    "test": "Waves mode enabled",
+    "passed": true
+  },
+  {
+    "test": "Waves canvas visible",
+    "passed": true
+  },
+  {
+    "test": "Visible demo beacons exist",
+    "passed": true
+  },
+  {
+    "test": "Demo source count labeled",
+    "passed": true
+  },
+  {
+    "test": "Projected bearing clearly disclosed",
+    "passed": true
+  },
+  {
+    "test": "Demo waves can be disabled",
+    "passed": true
+  },
+  {
+    "test": "Demo beacons removed",
+    "passed": true
+  },
+  {
+    "test": "Demo waves can be restored",
+    "passed": true
+  },
+  {
+    "test": "Selected Bluetooth device reflected in sources",
+    "passed": true
+  },
+  {
+    "test": "Cycle through signal sources works",
+    "passed": true
+  },
+  {
+    "test": "Mode menu shows waves active",
+    "passed": true
+  },
+  {
+    "test": "Radar mode switches",
+    "passed": true
+  },
+  {
+    "test": "Lens mode switches",
+    "passed": true
+  },
+  {
+    "test": "Manual heading slider works",
+    "passed": true
+  },
+  {
+    "test": "Position dropdown opens",
+    "passed": true
+  },
+  {
+    "test": "Only one dropdown opens at once",
+    "passed": true
+  },
+  {
+    "test": "Offcanvas opens",
+    "passed": true
+  },
+  {
+    "test": "History filter",
+    "passed": true
+  },
+  {
+    "test": "History places shown",
+    "passed": true
+  },
+  {
+    "test": "Bookmark saved",
+    "passed": true
+  },
+  {
+    "test": "Saved filter",
+    "passed": true
+  },
+  {
+    "test": "Offcanvas closes",
+    "passed": true
+  },
+  {
+    "test": "Place detail opens",
+    "passed": true
+  },
+  {
+    "test": "Place detail closes",
+    "passed": true
+  },
+  {
+    "test": "Coordinate dialog opens",
+    "passed": true
+  },
+  {
+    "test": "Coordinate dialog cancel",
+    "passed": true
+  },
+  {
+    "test": "Live coordinates selected",
+    "passed": true
+  },
+  {
+    "test": "Live OSM data parsed and rendered",
+    "passed": true
+  },
+  {
+    "test": "Berlin demo restoration",
+    "passed": true
+  },
+  {
+    "test": "Relative sensors labeled correctly",
+    "passed": true
+  },
+  {
+    "test": "Sensor can be switched off",
+    "passed": true
+  },
+  {
+    "test": "Camera background enables",
+    "passed": true
+  },
+  {
+    "test": "Camera stream stops cleanly",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 390px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 390px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 390px",
+    "passed": true
+  },
+  {
+    "test": "Edge-to-edge mobile viewer at 390px: {'x': 0, 'y': 56, 'width': 390, 'height': 784}",
+    "passed": true
+  },
+  {
+    "test": "Orte toggle visible at 390px",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 430px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 430px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 430px",
+    "passed": true
+  },
+  {
+    "test": "Edge-to-edge mobile viewer at 430px: {'x': 0, 'y': 56, 'width': 430, 'height': 784}",
+    "passed": true
+  },
+  {
+    "test": "Orte toggle visible at 430px",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 760px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 760px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 760px",
+    "passed": true
+  },
+  {
+    "test": "Edge-to-edge mobile viewer at 760px: {'x': 0, 'y': 56, 'width': 760, 'height': 784}",
+    "passed": true
+  },
+  {
+    "test": "Orte toggle visible at 760px",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 768px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 768px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 768px",
+    "passed": true
+  },
+  {
+    "test": "Desktop has persistent sidebar at 768px",
+    "passed": true
+  },
+  {
+    "test": "No JavaScript errors at 1440px: []",
+    "passed": true
+  },
+  {
+    "test": "Demo places render at 1440px",
+    "passed": true
+  },
+  {
+    "test": "ES modules run at 1440px",
+    "passed": true
+  },
+  {
+    "test": "Desktop has persistent sidebar at 1440px",
+    "passed": true
+  },
+  {
+    "test": "Waves render on desktop",
+    "passed": true
+  },
+  {
+    "test": "Service worker uses distinct v5 cache",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./index.html",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./manifest.webmanifest",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./css/main.css",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./css/components.css",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./css/responsive.css",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./css/waves.css",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/app.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/config.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/state.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/services/geolocation.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/services/sensors.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/services/camera.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/services/places-api.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/services/signals.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/toolbar.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/viewer.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/waves.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/radar.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/sidebar.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/dropdown.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/components/notifications.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/utils/geo-math.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/utils/dom.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./js/utils/storage.js",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./icons/icon.svg",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./icons/icon-192.png",
+    "passed": true
+  },
+  {
+    "test": "Precached PWA asset exists: ./icons/icon-512.png",
+    "passed": true
+  },
+  {
+    "test": "Offline shell includes all module files",
+    "passed": true
+  }
+]
+Total 99 passed 99

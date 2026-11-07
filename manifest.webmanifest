@@ -1,8 +1,8 @@
 {
   "id": "./index.html",
-  "name": "Hidden Places – Entdecke das Unsichtbare",
+  "name": "Hidden Places v5 – Orte & Invisible Waves",
   "short_name": "Hidden Places",
-  "description": "Erkunde besondere Orte in deiner Blickrichtung mit Kompass und Live-Daten aus OpenStreetMap.",
+  "description": "Entdecke besondere Orte und visualisiere Browser-Verbindungsinfos und freiwillig ausgewählte Bluetooth-Geräte in einem illustrativen Signalraum.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -11,7 +11,17 @@
   "theme_color": "#0b1313",
   "lang": "de",
   "icons": [
-    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
